@@ -1,0 +1,2 @@
+[Epoch 1] Train time:0.20, Training accuracy:0.2241. Loss: 1.450 LR:0.000004
+[Epoch 1] Validation accuracy:0.4617
