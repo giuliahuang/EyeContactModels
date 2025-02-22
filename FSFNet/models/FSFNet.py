@@ -54,7 +54,8 @@ class FSFNet(nn.Module):
 
 
         self.backbone = Backbone(50)
-        ir_checkpoint = torch.load('/workspace/home/huang/giulia/FSFNet/models/pretrain/ir50.pth', map_location=lambda storage, loc: storage)
+        ir_checkpoint = torch.load('/Users/giulia_huang/Desktop/FSFNets/FSFNet/models/pretrained/best.pth', map_location=lambda storage, loc: storage)
+        print("loading pretrained model")
         self.backbone = load_pretrained_weights(self.backbone, ir_checkpoint)
 
         self.fsf_encoder = FSFEncoder(in_chans=196, embed_dim=256,

@@ -18,9 +18,11 @@ class ECdataset(data.Dataset):
         LABEL_COLUMN = 1
 
         if self.train:
-            dataset = pd.read_csv(os.path.join(self.root, 'tacnn/next_speaker/labels/next_speaker_train.csv'), sep=',')
+            dataset = pd.read_csv(os.path.join(self.root, 'train.csv'), sep=',')
+        # else:
+        #     dataset = pd.read_csv(os.path.join(self.root, 'tacnn/next_speaker/labels/next_speaker_val.csv'), sep=',')
         else:
-            dataset = pd.read_csv(os.path.join(self.root, 'tacnn/next_speaker/labels/next_speaker_val.csv'), sep=',')
+            dataset = pd.read_csv(os.path.join(self.root, 'val.csv'), sep=',')
 
         if self.dataidxs is not None:
             file_names = np.array(dataset.iloc[:, NAME_COLUMN].values)[self.dataidxs]
@@ -29,25 +31,19 @@ class ECdataset(data.Dataset):
             file_names = dataset.iloc[:, NAME_COLUMN].values
             target = dataset.iloc[:,LABEL_COLUMN].values
 
+        print("Check names ", file_names[:10])
+        print("Check target", target[:10])
+
         self.file_paths = []
         self.targets = []
 
-
-
         for f,t in zip(file_names, target):
-
-            self.tmp_file_paths = []
-            self.tmp_targets = []
-            for i in range(1,5):
-                path = os.path.join(self.root, 'tacnn/next_speaker/last_frames_out/'+ f[:-4] + str(i) + "_video_aligned_" +  "frame_det_00_000300.bmp")
-                if os.path.exists(path):
-                    self.tmp_file_paths.append(path)
-                    self.tmp_targets.append(t)
-                else:
-                    print("Error: " + f[:-4] + str(i))
-
-            self.file_paths.append(self.tmp_file_paths)
-            self.targets.append(self.tmp_targets)
+            path = os.path.join(self.root, 'dataset/'+ f +'.bmp')
+            if os.path.exists(path):
+                self.file_paths.append(path)
+                self.targets.append(t)
+            else:
+                print("Error: " + f)
 
     def __len__(self):
         return len(self.file_paths)
@@ -56,6 +52,17 @@ class ECdataset(data.Dataset):
         return self.targets
 
     def __getitem__(self, idx):
+        path = self.file_paths[idx]
+        image = cv2.imread(path)
+        image = image[:, :, ::-1]  # BGR to RGB
+        target = self.targets[idx]
+
+        if self.transform is not None:
+            image = self.transform(image)
+
+        return image, target
+
+"""     def __getitem__(self, idx):
         path = self.file_paths[idx]
         imgs = []
         for subpath in path:
@@ -71,4 +78,4 @@ class ECdataset(data.Dataset):
         imgs = torch.tensor(np.array(imgs))
         lbs = torch.tensor(np.array(target))
         
-        return imgs, lbs
+        return imgs, lbs """
