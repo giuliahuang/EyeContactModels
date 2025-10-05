@@ -39,7 +39,7 @@ class ClassificationHead(nn.Module):
 
 
 class FSFNet(nn.Module):
-    def __init__(self, img_size=224, num_classes=4, type="large"):
+    def __init__(self, img_size=224, num_classes=4, type="large", pretrained="./models/pretrained/best.pth"):
         super().__init__()
         if type == "small":
             depth = 4
@@ -51,10 +51,8 @@ class FSFNet(nn.Module):
         self.img_size = img_size
         self.num_classes = num_classes
 
-
-
         self.backbone = Backbone(50)
-        ir_checkpoint = torch.load('/Users/giulia_huang/Desktop/FSFNets/FSFNet/models/pretrained/best.pth', map_location=lambda storage, loc: storage)
+        ir_checkpoint = torch.load(pretrained, map_location=lambda storage, loc: storage)
         print("loading pretrained model")
         self.backbone = load_pretrained_weights(self.backbone, ir_checkpoint)
 
@@ -68,20 +66,11 @@ class FSFNet(nn.Module):
 
     def forward(self, x):
 
-        # # x: [batch_size, 4, C, H, W]
-        # batch_size, num_imgs, C, H, W = x.size()
-        # assert num_imgs == 4, "Number of images per sample must be 4."
-        # # Reshape to process all images in the batch independently
-        # x = x.view(batch_size * num_imgs, C, H, W)  # [B*4, C, H, W]
-
         x_ir = self.backbone(x)
         y_hat = self.fsf_encoder(x_ir)
         y_hat = self.ca(y_hat)
         y_feat = y_hat
         out = self.head(y_hat)
-
-        # out = out.view(batch_size, num_imgs)
-        # y_feat = y_feat.view(batch_size, num_imgs, -1)
         
         return out, y_feat
 
