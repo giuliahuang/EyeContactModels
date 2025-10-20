@@ -75,10 +75,11 @@ def run_training():
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
     num_classes = 4
-    datapath = '/home/mafuyan/Pictures/Multimediate2024/ec_train_val'
-    train_dataset = ECdataset(datapath, train=True, transform=data_transforms)
-    val_dataset = ECdataset(datapath, train=False, transform=data_transforms_val)
-    model = FSFNet(img_size=112, num_classes=num_classes, type=args.modeltype)
+    rootpath = '../Dataset/'
+    datapath = 'train_val.csv'
+    train_dataset = ECdataset(rootpath, data_path=datapath, train=True, transform=data_transforms)
+    val_dataset = ECdataset(rootpath, data_path=datapath, train=False, transform=data_transforms_val)
+    model = FSFNet(img_size=112, num_classes=num_classes, type=args.modeltype, pretrained="./models/pretrained/ir50.pth")
 
 
     val_num = val_dataset.__len__()
@@ -121,7 +122,6 @@ def run_training():
         base_optimizer = torch.optim.SGD
     else:
         raise ValueError("Optimizer not supported.")
-    # print(optimizer)
     optimizer = SAM(model.parameters(), base_optimizer, lr=args.lr, rho=0.05, adaptive=False,)
 
     scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.98)
@@ -183,7 +183,7 @@ def run_training():
             iter_cnt = 0
             bingo_cnt = 0
             model.eval()
-            for batch_i, (imgs, targets) in enumerate(val_loader):
+            for batch_i, (imgs, _ ,  targets) in enumerate(val_loader):
                 outputs, features = model(imgs.cuda())
                 targets = targets.cuda()
 

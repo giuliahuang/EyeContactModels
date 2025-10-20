@@ -39,7 +39,7 @@ class ClassificationHead(nn.Module):
 
 
 class FSFNet(nn.Module):
-    def __init__(self, img_size=224, num_classes=4, type="large", pretrained="./models/pretrained/best.pth"):
+    def __init__(self, img_size=224, num_classes=4, type="large", pretrained="./models/pretrained/ir50.pth"):
         super().__init__()
         if type == "small":
             depth = 4

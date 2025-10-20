@@ -116,6 +116,11 @@ cd FSFNets
    python test.py
    ```
 
+### Training FSFNet
+
+```bash
+python train.py --dataset ec -c ./models/pretrained/best.pth --modeltype large --batch_size 128 --epochs 300 --lr 0.000004 --optimizer adam --gpu 1
+```
 
 ### Training ML Models
 
@@ -180,6 +185,7 @@ python test.py
 
 ## Training
 
+
 ### FSFNet Training
 
 **Optimization**:
@@ -202,6 +208,7 @@ epochs = 300
 optimizer = "adam"
 model_type = "large"
 ```
+
 
 ### ML Model Training
 
