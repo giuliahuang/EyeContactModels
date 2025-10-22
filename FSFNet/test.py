@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
     # Load FSFNet model
     model_path = (
-        "./models/finetuned/best_finetuned_4_adjusted.pth"
+        "./models/checkpoint/best_finetuned.pth"
         if finetuned
         else "./models/pretrained/best.pth"
     )
@@ -213,6 +213,4 @@ if __name__ == "__main__":
 
     for line in to_print:
         print(line)
-        # with open("./best_finetuned_ensemble.log", "a") as f:
-        #     f.write(line + "\n")
 

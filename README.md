@@ -58,6 +58,15 @@ Output (4 classes)
 - **Base**: 6 transformer layers  
 - **Large**: 8 transformer layers (default)
 
+### Pretrained Models Organization
+
+```
+FSFNet/
+├── pretrained/          
+├──── ir50.pth         # IR-50 backbone weights for initializing FSFNet
+└──── best.pth         # Official FSFNet pretrained checkpoint (baseline)
+```
+
 ## Dataset
 
 The system uses the MPIIGroupInteraction dataset with the following structure:
@@ -106,12 +115,13 @@ cd FSFNets
 ### Quick Start
 
 1. **Prepare Dataset**: Place your dataset in the `Dataset/` directory
-2. **Train FSFNet**:
+2. **Prepare Models**: Place pretrained models in the `FSFNet/models/pretrained` directory
+3. **Train FSFNet**:
    ```bash
    cd FSFNet
    python train.py
    ```
-3. **Evaluate Model**:
+4. **Evaluate Model**:
    ```bash
    python test.py
    ```
@@ -236,13 +246,6 @@ Score = 0.67 × Macro F1 + 0.33 × Accuracy
 2. **ML Only**: Traditional machine learning
 3. **Ensemble**: Weighted combination of FSFNet and ML predictions
 
-### Performance Tracking
-
-- Real-time training logs
-- Validation metrics per epoch
-- Best model checkpointing
-- Comprehensive classification reports
-
 ## Results
 
 ### Model Performance
@@ -256,9 +259,8 @@ The system achieves state-of-the-art performance on eye contact detection:
 ### Pretrained Models
 
 Available model checkpoints:
+- `models/pretrained/ir50.pth`: pretrained model
 - `models/pretrained/best.pth`: Base FSFNet model
-- `models/finetuned/`: Fine-tuned variants
-- `models/SVC/`, `models/XGBoost/`: ML model checkpoints
 
 ## 🔬 Technical Details
 
@@ -285,7 +287,7 @@ The system combines:
 - **Structured Features**: Gaze, pose, and speaker information
 - **Ensemble Prediction**: Weighted combination of predictions
 
-## 📚 Citation
+## Citation
 
 ```bibtex
 @inproceedings{ma2024less,
@@ -322,10 +324,6 @@ FSFNets/
 ## Contributing
 
 Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 

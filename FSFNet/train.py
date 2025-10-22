@@ -215,7 +215,7 @@ def run_training():
                 torch.save({'iter': i,
                             'model_state_dict': model.state_dict(),
                             'optimizer_state_dict': optimizer.state_dict(), },
-                           os.path.join('./checkpoint', "best.pth"))
+                           os.path.join('./checkpoint', "best_finetuned.pth"))
                 print('Model saved.')
 
                 # log
