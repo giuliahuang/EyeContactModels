@@ -17,13 +17,15 @@ A comprehensive deep learning framework for eye contact detection in group inter
 
 ## Overview
 
-FSFNets is a state-of-the-art solution for eye contact detection that combines:
+FSFNets is a state-of-the-art solution for eye contact detection that combines: 
 
 - **FSFNet**: A transformer-based neural network with adaptive feature selection
 - **Traditional ML Models**: Support Vector Machines (SVM) and XGBoost for ensemble learning
 - **Multi-modal Features**: Visual features from face crops and structured features (gaze, pose, speaker information)
 
 The system addresses the MultiMediate2024 challenge for eye contact detection in group interaction scenarios.
+
+Paper: [DOI](https://doi.org/10.1145/3664647.3688987)
 
 ## Architecture
 
@@ -87,6 +89,19 @@ Dataset/
 ├── train_val.csv     # Training/validation split with features
 └── test.csv         # Test set with features
 ```
+
+### CSV Column Definitions (`train_val.csv`, `test.csv`)
+
+- **sample_index**: Unique sample identifier (matches image naming)
+- **ec_relative**: Eye contact label (0–3)
+- **gaze features**: Two 3D gaze vectors (gaze_0, gaze_1) and aggregated angles (gaze_angle_x, gaze_angle_y)
+- **head pose**: Translation (pose_Tx, pose_Ty, pose_Tz) and rotation (pose_Rx, pose_Ry, pose_Rz)
+- **speaker**: Speaker ID for the current frame
+- **subject_pos**: Original subject position index.
+- **adjusted_pos**: Aligned subject position index consistent across all recordings.
+- **is_speaker**: 1 if the subject is currently speaking, else 0
+- **data_subset**: Split tag for the row (e.g., train/val/test)
+- **speaker_x**: One-hot speaker identity vector
 
 ## Installation
 
