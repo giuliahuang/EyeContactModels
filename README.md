@@ -25,7 +25,7 @@ FSFNets is a state-of-the-art solution for eye contact detection that combines:
 
 The system addresses the MultiMediate2024 challenge for eye contact detection in group interaction scenarios.
 
-Paper: [DOI](https://doi.org/10.1145/3664647.3688987)
+Paper: [Less is More: Adaptive Feature Selection and Fusion for Eye Contact Detection](https://doi.org/10.1145/3664647.3688987)
 
 ## Architecture
 
