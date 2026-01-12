@@ -1,4 +1,4 @@
-# FSFNets: Adaptive Feature Selection and Fusion for Eye Contact Detection
+# Eye Contact Models: a focus on IDD (Intellectual and Developmental Disabilities)
 
 A comprehensive deep learning framework for eye contact detection in group interaction scenarios, featuring FSFNet (Feature Selection and Fusion Network) with ensemble capabilities using traditional machine learning models.
 
